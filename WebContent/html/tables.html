@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>后台管理- 校园二手书信息发布平台</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+	<style type="text/css">
+		.navbar-inverse{
+			background-image: linear-gradient(350deg, #330335, #AB5D7C);
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+	<script type="text/javascript" src="js/base/loginoff.js"></script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><span style="color: #FFFFFF;">校园二手书信息发布平台</span>后台管理</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 管理员:<span id="admin"></span> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="javascript:loginoff()"><span class="glyphicon glyphicon-log-out"></span> 退出登录</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<ul class="nav menu">
+			<li><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> 用户管理</a></li>
+			<li class="active"><a href="tables.html"><span class="glyphicon glyphicon-stats"></span> 二手书信息管理</a></li>
+		</ul>
+		<div class="attribution">(c) Copyright 2017 HuangKai. All Rights Reserved.  </div>
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">二手书管理</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">二手书管理</h1>
+			</div>
+		</div><!--/.row-->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<button class="btn btn-primary" name="deletebook" data-toggle="modal" data-target="#deletebook" disabled="disabled">删除二手书信息</button>
+						<button class="btn btn-primary" name="updatebook" data-toggle="modal" data-target="#updatebook" disabled="disabled">修改二手书信息</button>
+					</div>
+					<div class="panel-body">
+						<table id="booktable" data-toggle="table"  data-show-refresh="true" data-show-toggle="true" data-single-select="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						    <thead>
+						    <tr>
+						        <th data-checkbox="true" >选择</th>
+						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="name">书名</th>
+						        <th data-field="degree">新旧度</th>
+						        <th data-field="creatime">创建时间</th>
+						        <th data-field="price">价格</th>
+						        <th data-field="userid">用户ID</th>
+						        <th data-field="district">校区</th>
+						        <th data-field="img1">图片1</th>
+						        <th data-field="img2">图片2</th>
+						        <th data-field="img3">图片3</th>
+						    </tr>
+						    </thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+		
+		<!--删除user-->
+		<div class="modal fade" id="deletebook">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<h4>删除Book信息</h4>
+					</div>
+					<div class="modal-body">
+						<h3 style="width: 100%; text-align: center;">确认删除?</h3>
+						<p style="color: red">注意:</p>
+						<p>删除Book信息将删除其它信息(<span style="color:red;">书的收藏</span>),请谨慎操作!</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="canceldelete" class="btn btn-primary" data-dismiss="modal">取消</button>
+						<button type="button" id="confirmdelete" class="btn btn-primary" onclick="deletebook()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div><!--/.deleteuser-->
+		<!--updateuser-->
+		<div class="modal fade" id="updatebook">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<h4>修改用户信息</h4>
+					</div>
+					<div class="modal-body">
+						<div id="bookupdateinfo">
+							<label for="bookupdateid">书号:</label><input type="text" name="bookupdateid" id="bookupdateid" value="" disabled="disabled"/><span style=" color: red;" >(不可修改内容)</span>
+							<br />
+							<label for="bookupdatename">书名:</label><input type="text" name="bookupdatename" id="bookupdatename" value="" disabled="disabled"/><span style=" color: red;" >(不可修改内容)</span>
+							<hr>
+							<label for="bookupdatedegree">折旧:</label>
+							<select name="bookupdatedegree" id="bookupdatedegree">
+								<option value="9">9成新</option>
+								<option value="8">8成新</option>
+								<option value="7">7成新</option>
+								<option value="0">5成新</option>
+							</select>
+							<label for="bookupdatecreatime">创建时间:</label><input type="text" name="bookupdatecreatime" id="bookupdatecreatime" value=""/>
+							<br /><label for="bookupdateprice">价格:</label><input type="text" name="bookupdateprice" id="bookupdateprice" value=""/>
+							<label for="bookupdateuserid">用户号码:</label><input type="text" name="bookupdateuserid" id="bookupdateuserid" value=""/>
+							<br /><label for="userupdatedistrict">用户校区:</label>
+							<select name="bookupdatedistrict" id="bookupdatedistrict">
+								<option value="YaAn">雅安校区</option>
+								<option value="ChengDu">成都校区</option>
+								<option value="DuJiangyan">都江堰校区</option>
+							</select>
+							<label for="userupdateimg1">&nbsp;&nbsp;&nbsp;&nbsp;  图一:</label><input type="text" name="userupdateaddr" id="userupdateaddr" value=""/>
+							<br /><label for="userupdateimg2">图二:</label><input type="text" name="userupdateaddr" id="userupdateaddr" value=""/>
+							<label for="userupdateimg3">&nbsp;&nbsp;&nbsp;&nbsp;  图三:</label><input type="text" name="userupdateaddr" id="userupdateaddr" value=""/>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="cancelupdate" class="btn btn-primary" data-dismiss="modal">取消</button>
+						<button type="button" id="confirmupdate" class="btn btn-primary" onclick="updatebookpriminfo()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div><!--/.updatevip-->
+		
+	</div>	<!--/.main-->
+	<script type="text/javascript" src="js/base/adminName.js"></script>
+	<script type="text/javascript" src="js/base/bootstrapTableRefresh.js"></script>
+	<script type="text/javascript" src="js/base/book.js"></script>
+</body>
+
+</html>

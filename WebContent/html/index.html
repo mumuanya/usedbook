@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>后台管理- 校园二手书信息发布平台</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+
+	<style type="text/css">
+		.navbar-inverse{
+			background-image: linear-gradient(350deg, #330335, #AB5D7C);
+		}
+	</style>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-table.js"></script>
+		<script type="text/javascript" src="js/base/loginoff.js"></script>
+		
+</head>
+	
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><span style="color: #FFFFFF;">校园二手书信息发布平台</span>后台管理</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> 管理员:<span id="admin"></span><span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="javascript:loginoff()"><span class="glyphicon glyphicon-log-out"></span> 退出登录</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<ul class="nav menu">
+			<li class="active"><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> 用户管理</a></li>
+			<li><a href="tables.html"><span class="glyphicon glyphicon-stats"></span> 二手书信息管理</a></li>
+		</ul>
+		<div class="attribution">(c) Copyright 2017 HuangKai. All Rights Reserved.  </div>
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">用户管理</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">用户管理</h1>
+			</div>
+		</div><!--/.row-->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<button class="btn btn-primary" name="deleteuser" data-toggle="modal" data-target="#deleteuser" disabled="disabled">删除用户</button>
+						<button class="btn btn-primary" name="updateuser" data-toggle="modal" data-target="#updateuser" disabled="disabled">修改用户信息</button>
+					</div>
+					<div class="panel-body">
+						<table id="usertable" data-toggle="table"   data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc" data-single-select="true">
+						    <thead>
+						    <tr>
+						        <th data-field="" data-checkbox="true" >选择</th>
+						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="neckname">昵称</th>
+						        <th data-field="mail">邮箱</th>
+						        <th data-field="password">密码</th>
+						        <th data-field="token">令牌</th>
+						        <th data-field="phone">电话</th>
+						        <th data-field="addr">地址</th>
+						        <th data-field="district">校区</th>
+						        <th data-field="creatime">创建时间</th>
+						        <th data-field="role">角色</th>
+						    </tr>
+						    </thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+		
+		<!--删除user-->
+		<div class="modal fade" id="deleteuser">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<h4>删除user信息</h4>
+					</div>
+					<div class="modal-body">
+						<h3 style="width: 100%; text-align: center;">确认删除?</h3>
+						<p style="color: red">注意:</p>
+						<p>删除用户将删除用户的其他信息(<span style="color:red;">用户的收藏，用户发布的信息</span>),请谨慎操作!</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="canceldelete" class="btn btn-primary" data-dismiss="modal">取消</button>
+						<button type="button" id="confirmdelete" class="btn btn-primary" onclick="deleteuser()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div><!--/.deleteuser-->
+		<!--updateuser-->
+		<div class="modal fade" id="updateuser">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						<h4>修改用户信息</h4>
+					</div>
+					<div class="modal-body">
+						<div id="userupdateinfo">
+							<label for="vipupdateid">用户ID:</label><input type="text" name="userupdateid" id="userupdateid" value="" disabled="disabled"/><span style=" color: red;" >(不可修改内容)</span>
+							<br />
+							<label for="userupdatemail">用户邮箱:</label><input type="text" name="userupdatemail" id="userupdatemail" value="" disabled="disabled"/><span style=" color: red;" >(不可修改内容)</span>
+							<hr>
+							<label for="userupdateneckname">用户昵称:</label><input type="text" name="userupdateneckname" id="userupdateneckname" value=""/>
+							<label for="userupdatepic">用户头像:</label><input type="text" name="userupdatepic" id="userupdatepic" value=""/>
+							<br /><label for="userupdatepassword">用户密码:</label><input type="text" name="userupdatepassword" id="userupdatepassword" value=""/>
+							<label for="userupdattoken">用户令牌:</label><input type="text" name="userupdattoken" id="userupdattoken" value=""/>
+							<br /><label for="userupdatephone">用户电话:</label><input type="text" name="userupdatephone" id="userupdatephone" value=""/>
+							<label for="userupdateaddr">用户地址:</label><input type="text" name="userupdateaddr" id="userupdateaddr" value=""/>
+							<br /><label for="userupdatephone">用户角色:</label>
+							<select name="userupdaterole" id="userupdaterole">
+								<option value="1">管理员</option>
+								<option value="0">普通用户</option>
+							</select>
+							<label for="userupdatephone">用户校区:</label>
+							<select name="userupdatedistrict" id="userupdatedistrict">
+								<option value="YaAn">雅安校区</option>
+								<option value="ChengDu">成都校区</option>
+								<option value="DuJiangyan">都江堰校区</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="cancelupdate" class="btn btn-primary" data-dismiss="modal">取消</button>
+						<button type="button" id="confirmupdate" class="btn btn-primary" onclick="updateuserpriminfo()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div><!--/.updatevip-->
+		
+	</div>	<!--/.main-->
+	<script type="text/javascript" src="js/base/adminName.js"></script>
+	<script type="text/javascript" src="js/base/bootstrapTableRefresh.js"></script>
+	<script type="text/javascript" src="js/base/index.js"></script>
+</body>
+</html>

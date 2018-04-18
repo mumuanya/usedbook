@@ -1,0 +1,22 @@
+encoding:GBK
+
+用户接口
+/user
+-------
+/info                      GET       获取用户的基本信息                    传入参数：token                                                         传出参数：用户信息的json
+/info                      POST      更新用户的基本信息                    传入参数： token（必须）   neckname pic  phone addr district（非必须）                                传出参数：是否成功
+/favor                     GET       用户的收藏                                    传入参数：token（必须） limit（可选）                                                                                                                           传出参数：用户收藏的所有或者一部分
+/favor/delete/{favorid}    POST      删除用户的收藏                            传入参数：token                                                         传出参数：删除是否成功
+
+书相关接口
+/book
+/books                     GET       获取用户发布的所有书的信息     传入参数：token（必须）  limit（非必须）                                                                                                                     传出参数：用户发布的书的json数组
+/publish                   POST      发布一本书                                     传入参数：token（必须）   name（必须） degree（默认很旧） price（必须） district（必须） img1（可选） img2（可选） img3（可选）           传出参数：发布是否成功
+/delete/{bookid}           POST      删除一本书                                     传入参数：token                                                         传出参数：删除是否成功
+/favor/{bookid}            POST      收藏一本书                                     传入参数：token                                                         传出参数：收藏是否成功
+
+其它接口
+
+/home/books                GET       获取所有书或者一部分书的信息  传入参数：limit（默认可不传）district(默认所有，可传YaAn,ChengDu,DuJiangyan)     传出参数：如果limit没有传入，则返回所有书的信息
+/login                     POST      登录                                                  传入参数：mail password                                                 传出参数：code token   
+/regist                    POST      注册                                                  传入参数：neckname(可选) mail（必选） pic可选 password必选 phone可选 addr可选 district必选  传出参数：code token

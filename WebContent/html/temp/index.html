@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>校园二手书服务平台</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<h1>服务正常！我叫gay铠</h1>
+		<form action="/usedbook/user/info" method="post">
+			token：<input type="text" name="token" value=""><br />
+			昵称：<input type="text" name="neckname" value="" placeholder="xxx">
+			<input type="submit" value="测试查询用户信息">
+		</form>
+		<hr />
+		<form action="/usedbook/book/publish" method="post">
+			token：<input type="text" name="token" value=""><br />
+			
+			name：<input type="text" name="name" value="" placeholder="xxx">
+			price：<input type="text" name="price" value="" placeholder="xxx">
+			district：
+			<select name="district">
+				<option title="雅安" selected="selected"  value="YaAn">雅安</option>
+				<option title="成都" value="ChengDu">成都</option>
+				<option title="都江堰" value="DuJiangyan">都江堰</option>
+			</select>
+			img1(非必要)：<input type="text" name="img1" value="" placeholder="xxx">
+			
+			<input type="submit" value="测试发布一本书">
+		</form>
+		<hr />
+		<form action="/usedbook/book/delete/3" method="post">
+			token：<input type="text" name="token" value=""><br />
+			书的id：<input type="number" name="bookid" value="" placeholder="书本id(rest此处填写无效)">
+			<input type="submit" value="测试删除书本信息">
+		</form>
+		<hr />
+		<form action="/usedbook/book/favor/1" method="post">
+			token：<input type="text" name="token" value=""><br />
+			<input type="submit" value="收藏书本">
+		</form>
+		<hr />
+		<form action="/usedbook/login" method="post">
+			邮箱：<input type="text" name="mail" value=""><br />
+			密码：<input type="password" name="password" value=""><br />
+			<input type="submit" value="登录测试">
+		</form>
+		<hr />
+		<form action="/usedbook/regist" method="post">
+			邮箱<span style="color:red">*</span>：<input type="text" name="mail" value=""><br />
+			昵称：<input type="text" name="neckname" value=""><br />
+			头像：<input type="text" name="pic" value=""><br />
+			密码<span style="color:red">*</span>：<input type="password" name="password" value=""><br />
+			电话：<input type="text" name="phone" value=""><br />
+			地址：<input type="text" name="addr" value=""><br />
+			区域<span style="color:red">*</span>：<select name="district">
+					<option title="雅安" selected="selected"  value="YaAn">雅安</option>
+					<option title="成都" value="ChengDu">成都</option>
+					<option title="都江堰" value="DuJiangyan">都江堰</option>
+				</select>
+			<input type="submit" value="注册测试"><span style="color:red">*</span>表示必须填写
+		</form>
+	</body>
+</html>

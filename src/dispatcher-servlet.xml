@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!--配置自动扫描controller com.szwh.controller -->
+	<context:component-scan base-package="cn.kai.controller"></context:component-scan>
+
+	<!--配置视图解析器  -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!--配置文件上传下载  -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxInMemorySize" value="#{1024*1024*10}"></property>
+		<property name="maxUploadSize" value="#{1024*1014*20}"></property>
+	</bean>
+	
+	<!--配置静态资源路径  -->
+	<!--注意，这里讲html这个文件夹的虚拟路径映射为pages，在浏览器里面访问的栗子：www.xxx.com/pages/**   这样就能直接访问/html文件夹下的内容  -->
+	<mvc:resources location="/html/" mapping="/pages/**"></mvc:resources>
+	<!--配置静态资源路径后会加载默认映射静态资源的default-servlet,需开启注解支持以加载requestMappingHandler等相关bean.  -->
+	<mvc:annotation-driven>
+	</mvc:annotation-driven>
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="defaultCharset" value="utf-8">
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!--配置view controller,直接转发至JSP,不用经过controller  -->
+<!-- 	<mvc:view-controller path="/admin" view-name="/internal/adminlogin"/>
+	<mvc:view-controller path="/about" view-name="/frontend/about"/>
+	<mvc:view-controller path="/article" view-name="/frontend/article"/> -->
+	<!--配置拦截器用于处理管理员登录  -->
+ 	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:exclude-mapping path="admin/login"/>
+			<mvc:exclude-mapping path="/admin/loginin"/>
+			<bean class="com.rk.interceptor.AdminPageInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/user/loginin"/>
+			<bean class="com.rk.interceptor.UserPageInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/article_show"/>
+			<bean class="com.szwh.interceptor.ClickInteceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+</beans>
